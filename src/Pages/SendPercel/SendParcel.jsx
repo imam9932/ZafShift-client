@@ -11,9 +11,14 @@ const SendParcel = () => {
     <div>
       <h1 className='text-secondary text-2xl text-center'>Send Your Parcel</h1>
       <form onSubmit={handleSubmit(handleSendParcel)}>
-        {/* document */}
+        {/* parcel document */}
         <div>
-
+ <label className="label">
+  <input type="radio" value={document} className="radio" defaultChecked {...register('')} />
+  Document</label>
+ <label className="label">
+  <input type="radio" value='non-document' className="radio" defaultChecked {...register('')} />
+  Non-document</label>
         </div>
         {/* parcel info:name,weight */}
         <div>
