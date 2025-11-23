@@ -15,6 +15,9 @@ import AuthProvider from './Contexts/AuthContext/AuthProvider.jsx';
 import PrivateRoute from './Route/PrivateRoute/PrivateRoute.jsx';
 import Rider from './Pages/Rider/Rider.jsx';
 import SendParcel from './Pages/SendPercel/SendParcel.jsx';
+import DashBoard from './Layout/DashBoard.jsx';
+import MyParcels from './Pages/DashboardPage/MyParcels.jsx';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 
 const router = createBrowserRouter([
   {
@@ -58,14 +61,30 @@ const router = createBrowserRouter([
         element: <Login></Login>
       }
     ]
+  },
+  {
+    path:'/dashboard',
+    element:<PrivateRoute>
+      <DashBoard></DashBoard>
+    </PrivateRoute>,
+    children:[
+      {
+        path:'my-parcels',
+        element:<MyParcels></MyParcels>
+      }
+    ]
   }
 ]);
 
+const queryClient=new QueryClient();
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AuthProvider>
+   <QueryClientProvider client={queryClient}>
+     <AuthProvider>
       <RouterProvider router={router} />
       <ToastContainer></ToastContainer>
     </AuthProvider>,
+   </QueryClientProvider>
   </StrictMode>,
 )

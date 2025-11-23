@@ -27,6 +27,12 @@ const Navbar = () => {
     <NavLink to={'/sendParcel'}>Send Parcel</NavLink>
     <NavLink to={'/blog'}>Blog</NavLink>
     <NavLink to={'/contact'}>Contact</NavLink>
+
+    {
+      user && <div>
+        <NavLink to={'/dashboard/my-parcels'}>My Parcels</NavLink>
+      </div>
+    }
   </div>
   return (
     <div className="navbar bg-base-100 shadow-sm">

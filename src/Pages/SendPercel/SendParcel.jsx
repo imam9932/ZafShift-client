@@ -1,15 +1,23 @@
 import React from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useLoaderData } from 'react-router';
+import Swal from 'sweetalert2';
+import UseAxiosSecure from '../../Hooks/UseAxiosSecure';
+import UseAuth from '../../Hooks/UseAuth';
 
 const SendParcel = () => {
-  const { register, handleSubmit, formState: { errors },control } = useForm();
+  const { register, handleSubmit,  
+  control } = useForm();
+const axiosSecure=UseAxiosSecure();
+const {user}=UseAuth()
+
+
   const data=useLoaderData();
    
 
   const duplicateRegions=data.map(region=>region.region);
   const regions=[...new Set(duplicateRegions)];
-  console.log(regions);
+  
   const senderRegion=useWatch( {control,name:'senderRegion'});
   const receiverRegion=useWatch({control,name:'receiverRegion'})
 
@@ -24,8 +32,56 @@ const SendParcel = () => {
 
   const handleSendParcel = (data) => {
     console.log(data);
-    const sameDistrict=data.senderDistrict===data.receiverDistrict;
-    console.log(sameDistrict);
+    const isDocument =data.parcelType==='document';
+    const isSameDistrict=data.senderDistrict===data.receiverDistrict;
+     const parcelWeight=parseFloat(data.parcelWeight);
+    //  console.log(parcelWeight);
+
+
+     let cost=0;
+     if(isDocument){
+      cost=isSameDistrict? 60:80;
+
+     }
+     else{
+      if(parcelWeight <3){
+        cost=isSameDistrict? 110:150;
+
+      }
+      else{
+        const minCharge=isSameDistrict? 110:150;
+        const extraWeight=parcelWeight-3;
+        const extraCharge=isSameDistrict? extraWeight*40 : extraWeight *40+40;
+        cost=minCharge+extraCharge;
+      }
+     }
+     console.log(cost);
+
+     Swal.fire({
+  title: "Please check the cost before confirmation",
+  text: `You have to pay ${cost} TK `,
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, I Agree"
+}).then((result) => {
+  if (result.isConfirmed) {
+
+    // save parcel info to the database
+    axiosSecure.post('/parcels',data)
+    .then(res=>{
+    console.log('after saving parcel',res.data);
+    }
+    )
+
+    Swal.fire({
+      title: "Confirm?",
+      text: "Your request has been submitted",
+      icon: "success"
+    });
+  }
+});
   }
   return (
     <div className='p-3'>
@@ -45,12 +101,12 @@ const SendParcel = () => {
           {/* name */}
           <fieldset className="fieldset">
             <label className="label">Parcel Name</label>
-            <input type="text" {...register('parcel name')} className="input w-full" placeholder="Parcel name" />
+            <input type="text" {...register('parcelName')} className="input w-full" placeholder="Parcel name" />
           </fieldset>
           {/* weight */}
           <fieldset className="fieldset">
             <label className="label">Parcel weight (kg)</label>
-            <input type="number" {...register('parcel weight')} className="input w-full" placeholder="Parcel weight" />
+            <input type="number" {...register('parcelWeight')} className="input w-full" placeholder="Parcel weight" />
           </fieldset>
         </div>
 
@@ -63,10 +119,10 @@ const SendParcel = () => {
             <fieldset className="fieldset">
               {/* sender name */}
               <label className="label">Sender Name</label>
-              <input type="text" {...register('senderName')} className="input w-full" placeholder="sender name" />
+              <input type="text" {...register('senderName')} className="input w-full" placeholder="sender name" defaultValue={user?.displayName} />
               {/* sender email address */}
               <label className="label">Sender Email</label>
-              <input type="email" {...register('senderEmail')} className="input w-full" placeholder="sender email" />
+              <input type="email" {...register('senderEmail')} className="input w-full" placeholder="sender email" defaultValue={user?.email} />
               {/* sender address */}
               <label className="label">Sender Address</label>
               <input type="text" {...register('senderAddress')} className="input w-full" placeholder="sender address" />
