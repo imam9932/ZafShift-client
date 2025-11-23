@@ -56,6 +56,8 @@ const {user}=UseAuth()
       }
      }
      console.log(cost);
+ 
+     data.cost=cost;
 
      Swal.fire({
   title: "Please check the cost before confirmation",

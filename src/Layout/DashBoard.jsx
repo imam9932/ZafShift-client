@@ -4,7 +4,8 @@ import { Link, NavLink, Outlet } from 'react-router';
 
 const DashBoard = () => {
   return (
-    <div className="drawer lg:drawer-open">
+    <div className="drawer lg:drawer-open w-11/12 mx-auto
+    mt-2">
   <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
   <div className="drawer-content">
     {/* Navbar */}
