@@ -125,9 +125,7 @@ const {user}=UseAuth()
               {/* sender email address */}
               <label className="label">Sender Email</label>
               <input type="email" {...register('senderEmail')} className="input w-full" placeholder="sender email" defaultValue={user?.email} />
-              {/* sender address */}
-              <label className="label">Sender Address</label>
-              <input type="text" {...register('senderAddress')} className="input w-full" placeholder="sender address" />
+               
               {/* sender phone no */}
               <label className="label">Sender Phone Number</label>
               <input type="number" {...register('senderPhoneNumber')} className="input w-full" placeholder="sender phone number" />
@@ -174,9 +172,7 @@ const {user}=UseAuth()
               {/* receiver email address */}
               <label className="label">Receiver Email</label>
               <input type="email" {...register('receiverEmail')} className="input w-full" placeholder="receiver email" />
-              {/* receiver address */}
-              <label className="label">Receiver Address</label>
-              <input type="text" {...register('receiverAddress')} className="input w-full" placeholder="receiver address" />
+              
               {/* receiver phone no */}
               <label className="label">Receiver Phone Number</label>
               <input type="number" {...register('receiverPhoneNumber')} className="input w-full" placeholder="receiver phone number" />
