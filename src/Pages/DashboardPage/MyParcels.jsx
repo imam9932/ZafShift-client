@@ -7,8 +7,7 @@ import { FaMagnifyingGlass
 } from "react-icons/fa6";
 import { CiTrash } from "react-icons/ci";
 import Swal from 'sweetalert2';
-import { Link } from 'react-router';
-
+ 
 
 
 
@@ -51,7 +50,21 @@ const MyParcels = () => {
       }
     })
   }
-});
+})
+  };
+
+  const handlePayment=async(parcel)=>{
+    const paymentInfo={
+      cost:parcel.cost,
+      parcelId:parcel._id,
+      senderEmail:parcel.senderEmail,
+      parcelName:parcel.parcelName
+    }
+
+
+    const res=await axiosSecure.post('/payment-checkout-session',paymentInfo);
+    console.log(res.data.url);
+    window.location.assign(res.data.url);
   }
   return (
     <div  className='mt-5'>
@@ -78,7 +91,7 @@ const MyParcels = () => {
         <td> {parcel.cost}</td>
         <td> 
           {
-            parcel.paymentStatus==='paid'? <span className='text-green-400'>paid</span> : <Link to={`/dashboard/payment/${parcel._id}`} className='btn btn-primary text-black'>pay</Link>
+            parcel.paymentStatus==='paid'? <span className='text-green-400'>paid</span> : <button onClick={()=>handlePayment(parcel)}  className='btn btn-primary text-black'>pay</button>
           }
         </td>
         <td className='flex gap-3'>

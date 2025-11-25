@@ -18,8 +18,7 @@ import SendParcel from './Pages/SendPercel/SendParcel.jsx';
 import DashBoard from './Layout/DashBoard.jsx';
 import MyParcels from './Pages/DashboardPage/MyParcels.jsx';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
-import Payment from './Pages/DashboardPage/Payment.jsx';
-import PaymentSuccessful from './Pages/DashboardPage/PaymentSuccessful.jsx';
+ import PaymentSuccessful from './Pages/DashboardPage/PaymentSuccessful.jsx';
 import PaymentCancell from './Pages/DashboardPage/PaymentCancell.jsx';
 
 const router = createBrowserRouter([
@@ -75,10 +74,10 @@ const router = createBrowserRouter([
         path:'my-parcels',
         element:<MyParcels></MyParcels>
       },
-      {
-        path:'payment/:parcelId',
-        element: <Payment></Payment>
-      },
+      // {
+      //   path:'payment/:parcelId',
+      //   element: <Payment></Payment>
+      // },
       {
         path:'payment-success',
         element:  <PaymentSuccessful></PaymentSuccessful>
