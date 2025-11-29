@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import UseAxiosSecure from '../../Hooks/UseAxiosSecure';
 import UseAuth from '../../Hooks/UseAuth';
@@ -10,6 +10,8 @@ const SendParcel = () => {
   control } = useForm();
 const axiosSecure=UseAxiosSecure();
 const {user}=UseAuth()
+const navigate=useNavigate();
+
 
 
   const data=useLoaderData();
@@ -74,14 +76,22 @@ const {user}=UseAuth()
     axiosSecure.post('/parcels',data)
     .then(res=>{
     console.log('after saving parcel',res.data);
+
+    if(res.data.insertedId){
+
+      navigate('/dashboard/my-parcels')
+      
+      Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: "Your work has been saved",
+  showConfirmButton: false,
+  timer: 1500
+});
+    }
     }
     )
 
-    Swal.fire({
-      title: "Confirm?",
-      text: "Your request has been submitted",
-      icon: "success"
-    });
   }
 });
   }

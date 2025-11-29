@@ -3,12 +3,14 @@ import UseAuth from '../../../Hooks/UseAuth';
 import { toast } from 'react-toastify';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router';
 import axios from 'axios';
+import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
  
 const Register = () => {
   const {register,handleSubmit,formState:{errors}}=useForm()
   const {registerUser,logInUserWithGoogle,updateUserProfile, }= UseAuth()
   const navigate=useNavigate();
   const location=useLocation();
+  const axiosSecure=UseAxiosSecure()
 
   const handleRegistration=(data)=>{
     console.log('after register',data);
@@ -23,11 +25,24 @@ const Register = () => {
       // store the image and get the photo url
       const formData=new FormData();
       formData.append('image',profileImg)
-      const image_API_URL=`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGEBB}`
+      const image_API_URL=`https://api.imgbb.com/1/upload?key=a52fc5e71b64ac0b6b528963b985be2a`
 
       axios.post(image_API_URL,formData)
       .then(res=>{
-        console.log('after image upload',res.data.data.url)
+         const photoURL=res.data.data.url;
+
+        //  create user in database
+       const userInfo={
+        email:data.email,
+        displayName:data.name,
+        photoURL:photoURL
+       }
+        axiosSecure.post('/users',userInfo)
+        .then(res=>{
+          if(res.data.insertedId){
+            console.log('user created in the database')
+          }
+        })
       
 
 
@@ -35,13 +50,13 @@ const Register = () => {
 
       const userProfile={
         displayName:data.name,
-        photoURL:res.data.data.url,
+        photoURL:photoURL,
       }
-      updateUserProfile(userProfile)
+      return updateUserProfile(userProfile)
       })
       .then(res=>{
         console.log('updated profile',res)
-        Navigate(location.state)
+        Navigate(location.state|| '/')
       })
       .catch(error=>{
         console.log(error)
@@ -73,6 +88,18 @@ const Register = () => {
         console.log(result.user);
         toast.success('Google login successful')
        navigate(location?.state || '/')
+// create user in the database
+        const userInfo={
+        email:result.user.email,
+        displayName:result.user.name,
+        photoURL:result.user.photoURL
+       };
+       axiosSecure.post('/users',userInfo)
+       .then(res=>{
+        console.log('user data has been stored',res.data)
+         navigate(location?.state || '/')
+
+       })
       })
       .catch(error=>{
         console.log(error.message)

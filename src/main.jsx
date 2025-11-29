@@ -20,6 +20,9 @@ import MyParcels from './Pages/DashboardPage/MyParcels.jsx';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
  import PaymentSuccessful from './Pages/DashboardPage/PaymentSuccessful.jsx';
 import PaymentCancell from './Pages/DashboardPage/PaymentCancell.jsx';
+import PaymentHistory from './Pages/DashboardPage/PaymentHistory.jsx';
+import ApproveRiders from './Pages/DashboardPage/ApproveRiders.jsx';
+import UsersManagement from './Pages/DashboardPage/UsersManagement.jsx';
 
 const router = createBrowserRouter([
   {
@@ -34,7 +37,8 @@ const router = createBrowserRouter([
         path: '/rider',
         element: <PrivateRoute>
           <Rider></Rider>
-        </PrivateRoute>
+        </PrivateRoute>,
+        loader: () => fetch('/warehouses.json').then(res => res.json())
       },
       {
         path: '/sendParcel',
@@ -85,6 +89,18 @@ const router = createBrowserRouter([
       {
         path:'payment-cancelled',
         element:   <PaymentCancell></PaymentCancell>
+      },
+      {
+        path:'payment-history',
+        element:<PaymentHistory></PaymentHistory>
+      },
+      {
+        path:'approve-riders',
+        element:<ApproveRiders></ApproveRiders>
+      },
+      {
+        path:'users-management',
+        element:<UsersManagement></UsersManagement>
       }
     ]
   }
