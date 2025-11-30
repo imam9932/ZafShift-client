@@ -23,6 +23,7 @@ import PaymentCancell from './Pages/DashboardPage/PaymentCancell.jsx';
 import PaymentHistory from './Pages/DashboardPage/PaymentHistory.jsx';
 import ApproveRiders from './Pages/DashboardPage/ApproveRiders.jsx';
 import UsersManagement from './Pages/DashboardPage/UsersManagement.jsx';
+import AdminRoute from './Route/AdminRoute.jsx';
 
 const router = createBrowserRouter([
   {
@@ -96,11 +97,15 @@ const router = createBrowserRouter([
       },
       {
         path:'approve-riders',
-        element:<ApproveRiders></ApproveRiders>
+        element:<AdminRoute>
+          <ApproveRiders></ApproveRiders>
+        </AdminRoute>
       },
       {
         path:'users-management',
-        element:<UsersManagement></UsersManagement>
+        element: <AdminRoute>
+          <UsersManagement></UsersManagement>
+        </AdminRoute>
       }
     ]
   }
