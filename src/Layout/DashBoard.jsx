@@ -1,13 +1,16 @@
 import React from 'react';
-import { FaHistory, FaUser } from 'react-icons/fa';
+import { FaHistory, FaTasks, FaUser } from 'react-icons/fa';
 import { LiaGiftSolid } from 'react-icons/lia';
 import { Link, NavLink, Outlet } from 'react-router';
-import { RiMotorbikeFill } from "react-icons/ri";
+import { RiEBikeFill, RiMotorbikeFill } from "react-icons/ri";
 import UseRole from '../Hooks/UseRole';
+import { SiGoogletasks } from "react-icons/si";
+
 
 
 const DashBoard = () => {
   const {role}=UseRole()
+  console.log('dashboard role',role)
   return (
     <div className="drawer lg:drawer-open w-11/12 mx-auto
     mt-2">
@@ -55,7 +58,34 @@ const DashBoard = () => {
 
             <span className="is-drawer-close:hidden">Payment History</span>
           </Link>
+{/* rider role && task */}
+  {role==='rider' && <li>
+  <Link to={'assigned-deliveries'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="assigned-deliveries">
+            
+            <FaTasks/>
 
+
+
+            <span className="is-drawer-close:hidden">Assigned-deliveries</span>
+          </Link> 
+  <Link to={'completed-deliveries'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="completed-deliveries">
+            
+             <SiGoogletasks />
+
+
+
+
+            <span className="is-drawer-close:hidden">Completed-deliveries</span>
+          </Link> 
+          
+          
+          </li>}
+
+
+
+
+
+{/* admin role & task */}
 {
   role==='admin' && <li>
   <Link to={'approve-riders'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="approve riders">
@@ -65,6 +95,16 @@ const DashBoard = () => {
 
 
             <span className="is-drawer-close:hidden">Approve riders</span>
+          </Link>
+
+
+  <Link to={'assign-riders'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="assign riders">
+            
+           <RiEBikeFill />
+
+
+
+            <span className="is-drawer-close:hidden"> Assign riders</span>
           </Link>
 
 

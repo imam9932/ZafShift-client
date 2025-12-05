@@ -79,6 +79,7 @@ const MyParcels = () => {
         <th>Name</th>
         <th>Cost</th>
         <th> Payment Status</th>
+        <th> Delivery Status</th>
         <th> Actions</th>
       </tr>
     </thead>
@@ -94,6 +95,7 @@ const MyParcels = () => {
             parcel.paymentStatus==='paid'? <span className='text-green-400'>paid</span> : <button onClick={()=>handlePayment(parcel)}  className='btn btn-primary text-black'>pay</button>
           }
         </td>
+        <td>{parcel.deliveryStatus}</td>
         <td className='flex gap-3'>
           <button className='btn btn-square hover:bg-primary'>
         <CiEdit/>

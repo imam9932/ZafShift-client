@@ -24,6 +24,10 @@ import PaymentHistory from './Pages/DashboardPage/PaymentHistory.jsx';
 import ApproveRiders from './Pages/DashboardPage/ApproveRiders.jsx';
 import UsersManagement from './Pages/DashboardPage/UsersManagement.jsx';
 import AdminRoute from './Route/AdminRoute.jsx';
+import AssignRiders from './Pages/DashboardPage/AssignRiders.jsx';
+import AssignedDeliveries from './Pages/DashboardPage/AssignedDeliveries.jsx';
+import RiderRoute from './Route/RiderRoute.jsx';
+import CompletedDeliveries from './Pages/DashboardPage/CompletedDeliveries.jsx';
 
 const router = createBrowserRouter([
   {
@@ -97,15 +101,40 @@ const router = createBrowserRouter([
       },
       {
         path:'approve-riders',
-        element:<AdminRoute>
-          <ApproveRiders></ApproveRiders>
-        </AdminRoute>
+        // element:<AdminRoute>
+        //   <ApproveRiders></ApproveRiders>
+        // </AdminRoute>
+        Component:ApproveRiders
       },
       {
         path:'users-management',
-        element: <AdminRoute>
-          <UsersManagement></UsersManagement>
-        </AdminRoute>
+        // element: <AdminRoute>
+        //   <UsersManagement></UsersManagement>
+        // </AdminRoute>
+        Component:UsersManagement
+      },
+      
+
+      // rider related route
+      {
+        path:'assigned-deliveries',
+      // element:<RiderRoute>
+      //   <AssignedDeliveries></AssignedDeliveries>
+      // </RiderRoute>
+      element:<AssignedDeliveries></AssignedDeliveries>
+      },
+      {
+        path:'assign-riders',
+        // element: <AdminRoute>
+        //   <AssignRiders>
+        // </AssignRiders>
+        // </AdminRoute>
+        Component:AssignRiders
+        
+      },
+      {
+        path:'completed-deliveries',
+        Component:CompletedDeliveries,
       }
     ]
   }

@@ -59,7 +59,8 @@ const updateInfo={status: status,email:r.email}
         <th>NO</th>
         <th>Name</th>
         <th>Email</th>
-        <th>Status</th>
+        <th>Application Status</th>
+        <th>Work Status</th>
         <th>District</th>
         <th>NID</th>
         <th>Age</th>
@@ -76,6 +77,7 @@ const updateInfo={status: status,email:r.email}
         <td>{
           <p className={`${r.status==='approved' ? 'text-green-800 font-bold' : 'text-red-800 font-bold'}`}>{r.status}</p>
 }</td>
+<td>{r.workStatus}</td>
         <td>{r.senderDistrict}</td>
         <td>{r.yourNIDNumber}</td>
         <td>{r.yourAge}</td>
